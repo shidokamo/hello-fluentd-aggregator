@@ -22,6 +22,15 @@ data:
       @type insert_id
     </filter>
 
+    <filter **>
+      @type record_transformer
+      enable_ruby true
+      <record>
+        host "#{Socket.gethostname}"
+        tag ${tag}
+      </record>
+    </filter>
+
     <match app.**>
       @type forward
       <server>
@@ -29,6 +38,10 @@ data:
         host "#{ENV['AGGREGATOR_SERVICE_HOST']}"
         port 24224
       </server>
+      <buffer>
+        @type memory
+        flush_mode immediate
+      </buffer>
     </match>
 
     <match **>
