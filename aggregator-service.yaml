@@ -5,6 +5,8 @@ metadata:
   labels:
     app: aggregator
 spec:
+  selector:
+    app: aggregator
   ports:
   - name: fluentd-tcp
     port: 24224
@@ -14,10 +16,3 @@ spec:
     port: 24224
     protocol: UDP
     targetPort: 24224
-    #  - name: fluentd-debug
-    #    port: 8888
-    #    protocol: TCP
-    #    targetPort: 8888
-    #  selector:
-    #    app: fluentd
-    #    app: aggregator
