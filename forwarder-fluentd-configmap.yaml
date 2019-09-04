@@ -22,12 +22,11 @@ data:
       @type insert_id
     </filter>
 
-    <match app.log>
+    <match app.**>
       @type forward
-
       <server>
         name aggregator
-        host aggregator
+        host "#{ENV['AGGREGATOR_SERVICE_HOST']}"
         port 24224
       </server>
     </match>

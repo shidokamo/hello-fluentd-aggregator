@@ -12,6 +12,7 @@ spec:
     metadata:
       labels:
         app: forwarder
+        name: test-logger
     spec:
       containers:
       # Logger app

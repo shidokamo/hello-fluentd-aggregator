@@ -11,4 +11,4 @@ spec:
     port: 24224
     targetPort: 24224
   selector:
-    app: aggregator
+    app: forwarder
