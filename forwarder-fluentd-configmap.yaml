@@ -35,7 +35,7 @@ data:
       @type forward
       <server>
         name aggregator
-        host "#{ENV['AGGREGATOR_SERVICE_HOST']}"
+        host aggregator
         port 24224
       </server>
       <buffer>
