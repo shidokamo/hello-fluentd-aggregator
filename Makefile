@@ -2,7 +2,7 @@ REPO=gcr.io
 PROJECT:= $(shell gcloud config get-value project)
 PREFIX := ${REPO}/${PROJECT}
 TEST_LOGGER_IMAGE := ${PREFIX}/test-logger:v2.0.0
-FLUENTD_IMAGE := ${PREFIX}/fluentd:v1.7.0
+FLUENTD_IMAGE := ${PREFIX}/fluentd:v1.7.0b
 export
 
 # You can see envsubsted yaml with this target
