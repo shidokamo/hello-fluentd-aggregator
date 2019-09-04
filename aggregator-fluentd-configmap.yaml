@@ -1,0 +1,22 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: aggregator-fluentd-config
+data:
+  #
+  # You can put multiple files if needed. Fluentd will read all of them
+  # Config file name must be *.conf.
+  #
+  app.conf: |-
+    <source>
+      @type forward
+      port 24224
+    </source>
+
+    <match app.log>
+      @type stdout
+    </match>
+
+    <match **>
+      @type stdout
+    </match>
