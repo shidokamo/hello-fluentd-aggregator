@@ -13,10 +13,26 @@ data:
       port 24224
     </source>
 
-    <match app.log>
-      @type stdout
-    </match>
-
     <match **>
-      @type stdout
+      @type copy
+      <store>
+        @type stdout
+      </store>
+      <store>
+        @type gcs
+        project "#{ENV['PROJECT_NAME']}"
+        bucket "#{ENV['BUCKET_NAME']}"
+        path ${tag}/%Y/%m/%d/%H/%M
+        object_key_format %{path}/%{index}.%{file_extension}
+        store_as json
+
+        <buffer tag,time>
+          @type file
+          path ./gcs-buffer
+          timekey 1m
+          timekey_wait 10s
+          timekey_use_utc true
+          flush_mode lazy
+        </buffer>
+      </store>
     </match>
