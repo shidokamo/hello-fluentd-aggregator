@@ -31,7 +31,7 @@ Fluentd の Aggregator コンテナの最終出力結果は以下のように確
 Pod の名前は、`kubectl get pod` で得たものに置き換えてください。
 
 ```
-kubectl logs aggregator-59cb4fdbc6-6kd4s -c sidecar
+kubectl logs aggregator-59cb4fdbc6-6kd4s
 ```
 
 ## クリーンナップ
