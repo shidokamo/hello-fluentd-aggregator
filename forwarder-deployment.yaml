@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: forwarder
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: forwarder
+  revisionHistoryLimit: 10
+  template:
+    metadata:
+      labels:
+        app: forwarder
+    spec:
+      containers:
+      # Logger app
+      - name: logger
+        image: ${TEST_LOGGER_IMAGE}
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+        env:
+        - name: LOG_DIR
+          value: /var/log
+        - name: LOG_INTERVAL
+          value: "1"
+      # fluentd sidecar
+      - name: fluentd
+        image: ${FLUENTD_IMAGE}
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+        resources:
+          limits:
+            cpu: "1"
+            memory: 500Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+        - name: config-volume
+          mountPath: /etc/fluent/config.d
+      volumes:
+      - name: varlog
+        emptyDir: {}
+      - name: config-volume
+        configMap:
+          defaultMode: 420
+          name: forwarder-fluentd-config
