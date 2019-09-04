@@ -1,13 +1,14 @@
-REPO=gcr.io
-PROJECT:= $(shell gcloud config get-value project)
-PREFIX := ${REPO}/${PROJECT}
+IMAGE_REPOSITORY=gcr.io
+GCP_PROJECT:= $(shell gcloud config get-value project)
+PREFIX := ${IMAGE_REPOSITORY}/${GCP_PROJECT}
 TEST_LOGGER_IMAGE := ${PREFIX}/test-logger:v2.0.0
 FLUENTD_IMAGE := ${PREFIX}/fluentd:v1.7.0b
+GCS_BUCKET := test-aggregator
 export
 
 # You can see envsubsted yaml with this target
 deploy:clean
-	kubectl apply -f aggregator-fluentd-configmap.yaml
+	cat aggregator-fluentd-configmap.yaml | envsubst | kubectl apply -f -
 	cat aggregator-deployment.yaml | envsubst |  kubectl apply -f -
 	kubectl apply -f aggregator-service.yaml
 	kubectl apply -f forwarder-fluentd-configmap.yaml

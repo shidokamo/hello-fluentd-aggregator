@@ -20,8 +20,8 @@ data:
       </store>
       <store>
         @type gcs
-        project "#{ENV['PROJECT_NAME']}"
-        bucket "#{ENV['BUCKET_NAME']}"
+        project ${GCP_PROJECT}
+        bucket ${GCS_BUCKET}
         path ${tag}/%Y/%m/%d/%H/%M
         object_key_format %{path}/%{index}.%{file_extension}
         store_as json
