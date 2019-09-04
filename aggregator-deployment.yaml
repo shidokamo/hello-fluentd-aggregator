@@ -26,6 +26,11 @@ spec:
         volumeMounts:
         - name: config-volume
           mountPath: /etc/fluent/config.d
+        - name: google-cloud-key
+          mountPath: /var/secrets/google
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /var/secrets/google/key.json
       volumes:
       - name: varlog
         emptyDir: {}
@@ -33,3 +38,6 @@ spec:
         configMap:
           defaultMode: 420
           name: aggregator-fluentd-config
+      - name: google-cloud-key
+        secret:
+          secretName: gcs-key

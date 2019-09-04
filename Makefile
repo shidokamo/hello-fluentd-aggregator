@@ -15,7 +15,6 @@ deploy:key clean
 	kubectl apply -f aggregator-service.yaml
 	kubectl apply -f forwarder-fluentd-configmap.yaml
 	cat forwarder-deployment.yaml | envsubst | kubectl apply -f -
-	rm ${KEY_FILE}
 clean:
 	-kubectl delete deployment forwarder
 	-kubectl delete configmap forwarder-fluentd-config
@@ -25,3 +24,5 @@ clean:
 key:
 	gcloud iam service-accounts keys create ${KEY_FILE} \
 		--iam-account ${SERVICE_ACCOUNT_NAME}@${GCP_PROJECT}.iam.gserviceaccount.com
+	-kubectl create secret generic gcs-key --from-file=${KEY_FILE}
+	rm ${KEY_FILE}
