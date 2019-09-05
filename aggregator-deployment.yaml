@@ -31,6 +31,10 @@ spec:
         env:
         - name: GOOGLE_APPLICATION_CREDENTIALS
           value: /var/secrets/google/key.json
+        - name: GCP_PROJECT
+          value: ${GCP_PROJECT}
+        - name: GCS_BUCKET
+          value: ${GCS_BUCKET}
       volumes:
       - name: varlog
         emptyDir: {}

@@ -20,8 +20,8 @@ data:
       </store>
       <store>
         @type gcs
-        project ${GCP_PROJECT}
-        bucket ${GCS_BUCKET}
+        project "#{ENV['GCP_PROJECT']}"
+        bucket "#{ENV['GCS_BUCKET']}"
         path ${tag}/%Y/%m/%d/%H/%M
         object_key_format %{path}/%{index}.%{file_extension}
         store_as json
@@ -34,5 +34,8 @@ data:
           timekey_use_utc true
           flush_mode lazy
         </buffer>
+        <format>
+          @type json
+        </format>
       </store>
     </match>
